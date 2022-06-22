@@ -229,7 +229,7 @@ html = markdown.markdown(
     }
 )
 
-soup = BeautifulSoup(html, "lxml")
+soup = BeautifulSoup(html, "html.parser")
 
 for tag in soup.find_all("span", class_="katex-html"):
     tag.decompose()
