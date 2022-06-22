@@ -1,0 +1,32 @@
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-build
+          path: env
+
+      - uses: actions/checkout@v2
+
+      - name: Setup Python environment
+        run: |
+          python -m venv env
+          . env/bin/activate
+          pip install markdown markdown-katex beautifulsoup pygments
+
+      - name: Build page
+        run: |
+          . env/bin/activate
+          python generate.py
+
+      - name: Deploy to GitHub pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: build/
