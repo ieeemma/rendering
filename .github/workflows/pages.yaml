@@ -23,6 +23,7 @@ jobs:
       - name: Build page
         run: |
           . env/bin/activate
+          mkdir build
           python generate.py
 
       - name: Deploy to GitHub pages
